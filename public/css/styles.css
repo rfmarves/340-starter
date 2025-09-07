@@ -1,6 +1,241 @@
-/******* Change Box Model ***************/
-*,
-*:before,
-*:after {
+:root {
+  /* change the values below to your chosen font(s) */
+  --heading-font: "Zilla Slab";
+  --paragraph-font: "Verdana";
+
+}
+
+  /******************/
+ /* General styles */
+/******************/
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
+
+body {
+  font-family: var(--paragraph-font);
+  background-image: url("/images/site/checkerboard.jpg");
+  background-repeat: repeat;
+  background-position: top left;
+  background-size: 50%;
+}
+
+#wrapper {
+  width: 100%;
+  max-width: 850px;
+  margin: 0 auto;
+  background-color: white;
+}
+
+form,
+label,
+input,
+button {
+  font-family: var(--paragraph-font);
+  font-size: 1rem;
+}
+
+h1,
+h2,
+h3,
+.site-name {
+  font-family: var(--heading-font);
+}
+
+h1 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+h2, h3 {
+  margin-bottom: 0.5rem;
+}
+
+ol {
+  margin-left: 1.5rem;
+}
+
+main {
+  padding: 0 0.5rem;
+  max-width: 90rem;
+  margin: 0 auto;
+}
+
+  /*************************/
+ /* Header and navigation */
+/*************************/
+header {
+  padding-bottom: 1.5rem;
+  padding-top: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+header a {
+  color: black;
+  text-decoration: none;
+}
+
+header .siteName {
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 0.5rem;
+  flex: 1 1 100%;
+}
+
+#tools {
+  display: block;
+  width: 9rem;
+  margin-right: 0.5rem;
+}
+
+nav {
+  background-color: black;
+  text-align: center;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+nav ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  width: 100%;
+}
+
+nav ul li {
+  list-style: none;
+}
+
+nav a {
+    padding: 0.25rem;
+    display: block;
+    color: white;
+    text-decoration: none;
+}
+
+  /*****************/
+ /* Footer styles */
+/*****************/
+
+footer {
+    padding: 0.5rem;
+    margin-top: 1rem;
+}
+
+footer a {
+    color: var(--primary-color-text);
+}
+
+  /********************/
+ /* Main body styles */
+/********************/
+
+.banner {
+  text-align: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-width: 260px;
+  /* background: url("/images/vehicles/delorean.jpg") no-repeat center/contain, #fff; */
+  display: flex;
+  align-items: flex-start;
+  /* padding: 2rem; */
+  margin-bottom: 1em;
+  overflow: hidden;
+}
+
+.banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.banner-card {
+  background-color: #FFFFFF99;
+  color: #01b0d3;
+  text-align: left;
+  position: absolute;
+  top: 25%;
+  left: 5%;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 1rem;
+  max-width: 300px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  min-height: fit-content;
+  min-width: fit-content;
+  height: 45%;
+  width: 20%;
+  max-width: 14rem;
+  max-height: 12rem;
+  vertical-align: middle;
+}
+
+.banner-card ul {
+  list-style: none;
+  padding-bottom: 1rem;
+}
+
+.banner-card .button {
+  background-color: #01b0d3;
+  color: black;
+  border-color: grey;
+  font-weight: bold;
+  padding: 0.8rem;
+  text-align: center;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  text-align: center;
+}
+
+.upgrade-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  text-align: center;
+}
+
+.upgrade-card .img-cont {
+  background-color: #01b0d3;
+  border: grey 2px solid;
+}
+
+.upgrade-card img {
+  margin: 0 auto;
+}
+
+.right-col ul {
+  margin: 1rem;
+  list-style: disc;
+}
+
+.right-col ul li {
+  padding-bottom: 1rem;
+}
+
+  /**********************/
+ /* 640px media query  */
+/**********************/
+@media screen and (min-width: 700px) {
+  .bottom-section {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    padding-top: 2rem;
+  }
+  #wrapper {
+    border: #01b0d3 2px solid;
+    border-radius: 1rem;
+    margin: 1rem auto;
+  }
+}
+
