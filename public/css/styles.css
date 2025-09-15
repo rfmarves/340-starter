@@ -103,9 +103,9 @@ nav {
 }
 
 nav ul {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   width: 100%;
+  display: flex;
+  justify-content: space-around;
 }
 
 nav ul li {
