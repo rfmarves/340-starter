@@ -223,6 +223,75 @@ footer a {
 }
 
   /**********************/
+ /* Inventory display  */
+/**********************/
+#inv-display {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 1rem;
+}
+
+#inv-display li {
+  text-align: center;
+  border-radius: 1rem;
+  border: #aaaaaa 1px solid;
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 2fr 1fr;
+}
+
+#inv-display hr {
+  border: #606060 2px solid;
+}
+
+#inv-display img {
+  width: 100%;
+  border-radius: 1rem 1rem 0 0;
+}
+
+#inv-display .namePrice {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+  /******************************/
+ /* Individual detail display  */
+/******************************/
+
+#inv-detail {
+  display: grid;
+  /* flex-direction: row; */
+  grid-template-columns: repeat(auto-fill, minmax(23rem, 1fr));
+  gap: 1rem;
+}
+
+#inv-detail img {
+  width: 100%;
+}
+
+#inv-detail h1 {
+
+}
+
+#inv-detail .listedDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 1rem;
+}
+
+#inv-detail .listedDetails p {
+  padding-bottom: 0.75rem;
+  padding-top: 0.75rem;
+}
+
+#inv-detail .listedDetails p:nth-child(odd) {
+  background-color: #f0f0f0;
+}
+
+  /**********************/
  /* 640px media query  */
 /**********************/
 @media screen and (min-width: 700px) {

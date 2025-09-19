@@ -28,7 +28,7 @@ invCont.buildByInventoryId = async function (req, res, next) {
   let nav = await utilities.getNav()
   let detail = await utilities.buildInventoryDetail(data)
   res.render("./inventory/detail", {
-    title: data[0].inv_make + " " + data[0].inv_model,
+    title: data[0].inv_year + " " + data[0].inv_make + " " + data[0].inv_model,
     nav,
     detail,
   })
