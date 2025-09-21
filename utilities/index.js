@@ -76,7 +76,7 @@ Util.buildInventoryDetail = async function(data){
     detail += '<p><strong>Miles: </strong>' + new Intl.NumberFormat('en-US').format(vehicle.inv_miles) + '</p>'
     detail += '</div></div></div>'
   } else { 
-    detail += '<p class="notice">Sorry, no matching vehicle could be found.</p>'
+    detail = '<p class="notice">Sorry, no matching vehicle could be found.</p>'
   }
   return detail
 }
