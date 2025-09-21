@@ -66,7 +66,7 @@ invCont.buildByInventoryId = async function (req, res, next) {
 }
 
 invCont.forcedError = (req, res, next) => {
-    let err = new Error("Wow! Congratulations, you found a server error!")
+    let err = new Error("Wow! Congratulations! You found a server error!")
     err.status = 500
   next(err)
 }
