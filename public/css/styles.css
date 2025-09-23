@@ -291,6 +291,21 @@ footer a {
   background-color: #f0f0f0;
 }
 
+ul.notice,
+ul.error {
+  font-weight: bold;
+  padding-bottom: 1rem;
+  padding-left: 2rem;
+}
+
+ul.notice {
+    color: rgb(3, 100, 16);
+}
+
+ul.error {
+    color: rgb(158, 0, 0);
+}
+
   /**********************/
  /* 640px media query  */
 /**********************/
