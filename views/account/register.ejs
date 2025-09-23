@@ -1,0 +1,19 @@
+<h1>Register</h1>
+<%- messages() %>
+<div class="register">
+    <form action="/account/login" method="post">
+        <label for="account_first_name">First name:</label>
+        <input type="text" id="account_first_name" name="account_first_name" required>
+        <label for="account_last_name">Last name:</label>
+        <input type="text" id="account_last_name" name="account_last_name" required>
+        <label for="account_email">Email:</label>
+        <input type="email" id="account_email" name="account_email" required>
+        <label for="account_password">Password:</label>
+        <input type="password" id="account_password" name="account_password" pattern="(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required>
+        <span id="passwordButton">Show Password</span>
+        <p class="passwordRequirements"><small>Passwords must be at least 12 characters and contain at least 1 uppercase letter, 1 number, and 1 special character.</small></p>
+        <button type="submit" class="button">Register</button>
+    </form>
+    <p class="redirect">Have an account? <a href="/account/login">Log-in</a></p>
+</div>
+<script src="/js/script.js"></script>
