@@ -24,9 +24,6 @@ accCont.buildRegister = async function (req, res, next) {
     title: "Register",
     nav,
     errors: null,
-    account_firstname: "",
-    account_lastname: "",
-    account_email: "",
   })
 }
 
@@ -60,9 +57,6 @@ accCont.registerAccount = async function(req, res) {
       title: "Registration",
       nav,
       errors: null,
-      account_firstname,
-      account_lastname,
-      account_email,
     })
   }
 }
