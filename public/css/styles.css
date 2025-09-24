@@ -373,7 +373,7 @@ ul.error {
   cursor: pointer; 
 }
 
-input:required:invalid, input:focus:invalid {
+input:required:user-invalid, input:focus:user-invalid {
  background-color: rgb(235, 174, 194);
 }
 
