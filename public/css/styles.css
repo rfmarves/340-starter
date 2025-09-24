@@ -271,10 +271,6 @@ footer a {
   width: 100%;
 }
 
-#inv-detail h1 {
-
-}
-
 #inv-detail .listedDetails {
   display: flex;
   flex-direction: column;
@@ -359,6 +355,7 @@ ul.error {
   border-radius: 1rem;
   margin-top: 0.5rem;
   align-self: center;
+  cursor: pointer;
 }
 
 .register .redirect, 

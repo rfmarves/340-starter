@@ -7,7 +7,10 @@ const utilities = require("../utilities/")
 // Route to build login view
 router.get("/login", utilities.handleErrors(accController.buildLogin));
 
-// Route to build registraiton view
+// Route to build registration view
 router.get("/register", utilities.handleErrors(accController.buildRegister));
+
+// Route to process registration view
+router.post("/register", utilities.handleErrors(accController.registerAccount));
 
 module.exports = router;
