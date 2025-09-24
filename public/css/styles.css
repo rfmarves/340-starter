@@ -373,6 +373,10 @@ ul.error {
   cursor: pointer; 
 }
 
+input:required:invalid, input:focus:invalid {
+ background-color: rgb(235, 174, 194);
+}
+
   /**********************/
  /* 640px media query  */
 /**********************/
