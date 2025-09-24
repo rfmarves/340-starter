@@ -75,7 +75,8 @@ app.use(async (err, req, res, next) => {
     title: err.status || 'Server Error',
     message,
     nav,
-    errorText: message
+    errorText: message,
+    errors: null,
   })
 })
 
