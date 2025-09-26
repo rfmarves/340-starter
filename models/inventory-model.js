@@ -1,16 +1,18 @@
 const pool = require("../database/")
 
+inventoryModel = {}
+
 /* ***************************
  *  Get all classification data
  * ************************** */
-async function getClassifications(){
+inventoryModel.getClassifications = async function(){
   return await pool.query("SELECT * FROM public.classification ORDER BY classification_name")
 }
 
 /* ***************************
  *  Get all inventory items and classification_name by classification_id
  * ************************** */
-async function getInventoryByClassificationId(classification_id) {
+inventoryModel.getInventoryByClassificationId = async function(classification_id) {
   try {
     const data = await pool.query(
       `SELECT * FROM public.inventory AS i 
@@ -28,7 +30,7 @@ async function getInventoryByClassificationId(classification_id) {
 /* ***************************
  *  Get data for one item based on inv_id
  * ************************** */
-async function getInventoryByInventoryId(inv_id) {
+inventoryModel.getInventoryByInventoryId = async function(inv_id) {
   try {
     const data = await pool.query(
       `SELECT * FROM public.inventory AS i 
@@ -42,4 +44,30 @@ async function getInventoryByInventoryId(inv_id) {
     console.error("getinventorybyid error " + error)
   }
 }
-module.exports = {getClassifications, getInventoryByClassificationId, getInventoryByInventoryId}
+
+/* **********************
+ *   Check for existing classification
+ * ********************* */
+inventoryModel.checkClassification = async function(classification_name){
+  try {
+    const sql = "SELECT * FROM classification WHERE LOWER(classification_name) = LOWER($1)"
+    const classificationList = await pool.query(sql, [classification_name])
+    return classificationList.rowCount
+  } catch (error) {
+    return error.message
+  }
+}
+
+/* *****************************
+*   Add a new classification
+* *************************** */
+inventoryModel.addClassification = async function(classification_name){
+  try {
+    const sql = "INSERT INTO classification (classification_name) VALUES ($1) RETURNING *"
+    return await pool.query(sql, [classification_name])
+  } catch (error) {
+    return error.message
+  }
+}
+
+module.exports = inventoryModel

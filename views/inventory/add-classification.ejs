@@ -4,8 +4,21 @@
 <% } else {
   res.redirect('/')
 } %>
+<% if (errors) { %>
+  <ul class="notice">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
 
 <%# messages() %>
 
-<%# Managent link list %>
-<%- form %>
+<%# Add Classification form %>
+<div class="formContainer">
+    <form id="classificationForm" action="/inv/add-classification" method="post">
+        <label for="classification_name">Classification name:</label>
+        <input type="text" id="classification_name" name="classification_name" pattern="^[a-zA-Z0-9]{3,}$" value="<%= locals.classification_name %>" required>
+        <button type="submit" class="button">Add</button>
+    </form>
+</div>

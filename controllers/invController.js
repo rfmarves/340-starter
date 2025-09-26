@@ -1,4 +1,4 @@
-const invModel = require("../models/inventory-model")
+const inventoryModel = require("../models/inventory-model")
 const utilities = require("../utilities/")
 
 const invCont = {}
@@ -19,7 +19,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
    err.status = 404;
    next(err);
   } else {
-    data = await invModel.getInventoryByClassificationId(classification_id)
+    data = await inventoryModel.getInventoryByClassificationId(classification_id)
     grid = await utilities.buildClassificationGrid(data)
   }
   let nav = await utilities.getNav()
@@ -49,7 +49,7 @@ invCont.buildByInventoryId = async function (req, res, next) {
    err.status = 404;
    next(err);
   } else {
-    data = await invModel.getInventoryByInventoryId(inventory_id)
+    data = await inventoryModel.getInventoryByInventoryId(inventory_id)
     detail = await utilities.buildInventoryDetail(data)
   }
   let nav = await utilities.getNav()
@@ -86,14 +86,45 @@ invCont.buildManagementView = async function (req, res, next) {
 
 invCont.buildAddClassificationView = async function (req, res, next) {
   let nav = await utilities.getNav()
-  let form = ""
   res.render("./inventory/add-classification", {
     title: "Add Classification",
     nav,
-    form,
     errors: null,
   })
 }
+
+/* ****************************************
+*  Process Classification addition
+* *************************************** */
+invCont.addClassification = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  const { classification_name } = req.body
+
+  const invClassificationResult = await inventoryModel.addClassification(
+    classification_name
+  )
+
+  if (invClassificationResult) {
+    req.flash(
+      "notice",
+      `The ${classification_name} has been added.`
+    )
+    nav = await utilities.getNav()
+    res.status(201).render("./inventory/add-classification", {
+      title: "Add Classification",
+      nav,
+      errors: null,
+    })
+  } else {
+    req.flash("notice", "Sorry, the classification couldn't be added.")
+    res.status(501).render("./inventory/add-classification", {
+      title: "Add Classification",
+      nav,
+      errors: null,
+    })
+  }
+}
+
 
 invCont.buildAddInventoryView = async function (req, res, next) {
   let nav = await utilities.getNav()

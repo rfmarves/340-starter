@@ -305,11 +305,11 @@ ul.error {
     color: rgb(158, 0, 0);
 }
 
-  /********************************/
- /* login & registraiton screens */
-/********************************/
-.register,
-.login {
+   /**********************************/
+  /*        Forms formatting        */
+ /* (login, registration & others) */
+/**********************************/
+.formContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -323,33 +323,28 @@ ul.error {
   max-width: fit-content;
 }
 
-.register a,
-.login a {
+.formContainer a {
   color: white;
 }
 
-.register form,
-.login form {
+.formContainer form {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.register label,
-.login label {
+.formContainer label {
   padding-top: 1rem;
   font-weight: bold;
 }
 
-.register input,
-.login input {
+.formContainer input {
   border-radius: 0.25rem;
   border: #32475c 1px solid;
   padding: 0.25rem;
 }
 
-.register button,
-.login button {
+.formContainer button {
   max-width: fit-content;
   padding:0.3rem 2rem;
   border-radius: 1rem;
@@ -358,12 +353,11 @@ ul.error {
   cursor: pointer;
 }
 
-.register .redirect, 
-.login .redirect {
+.formContainer .redirect {
   padding-top: 0.5rem;
 }
 
-.register .passwordRequirements {
+.formContainer .passwordRequirements {
   font-weight: regular;
   max-width: 20rem;
 }
