@@ -377,6 +377,17 @@ input:required:user-invalid, input:focus:user-invalid {
  background-color: rgb(235, 174, 194);
 }
 
+  /*************************/
+ /* Inventory Management  */
+/*************************/
+ul.management {
+  padding-left: 1rem;
+}
+
+.management li {
+  padding-bottom: 1rem;
+}
+
   /**********************/
  /* 640px media query  */
 /**********************/

@@ -1,0 +1,11 @@
+<%# Content Heading block %>
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
+
+<%# messages() %>
+
+<%# Managent link list %>
+<%- links %>

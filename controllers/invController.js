@@ -73,4 +73,15 @@ invCont.forcedError = (req, res, next) => {
   next(err)
 }
 
+invCont.buildManagementView = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  let links = '<ul class="management"><li><a href="/inv/add-classification">Add New Classification</a></li><li><a href="/inv/add-inventory">Add New Vehicle</a></li></ul>'
+  res.render("./inventory/management", {
+    title: "Inventory Management",
+    nav,
+    links,
+    errors: null,
+  })
+}
+
 module.exports = invCont
