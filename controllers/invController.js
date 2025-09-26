@@ -12,29 +12,26 @@ function isNumeric(str) {
  * ************************** */
 invCont.buildByClassificationId = async function (req, res, next) {
   const classification_id = req.params.classificationId
+  let className = ""
   let data = []
   let grid = ""
-  if (isNumeric(classification_id) === false) {
-   var err = new Error('Not Found');
-   err.status = 404;
-   next(err);
-  } else {
+  let nav = await utilities.getNav()
+  try {
+    className = await inventoryModel.getClassificationNameById(classification_id)   
     data = await inventoryModel.getInventoryByClassificationId(classification_id)
     grid = await utilities.buildClassificationGrid(data)
-  }
-  let nav = await utilities.getNav()
-  let className = ""
-  if (data.length < 1) {
-    className = "Classification does not exist"
-  } else {
-    className = data[0].classification_name
-  }
-  res.render("./inventory/classification", {
+      res.render("./inventory/classification", {
     title: className + " vehicles",
     nav,
     grid,
     errors: null,
   })
+  } catch (error) {
+    console.error("Error fetching classification name: " + error)
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+  }
 }
 
 /* ***************************
@@ -44,27 +41,23 @@ invCont.buildByInventoryId = async function (req, res, next) {
   const inventory_id = req.params.inventoryId
   let data = []
   let detail = ""
-  if (isNumeric(inventory_id) === false) {
-   var err = new Error('Not Found');
-   err.status = 404;
-   next(err);
-  } else {
+  let titleText = ""
+  let nav = await utilities.getNav()
+  try {
     data = await inventoryModel.getInventoryByInventoryId(inventory_id)
     detail = await utilities.buildInventoryDetail(data)
-  }
-  let nav = await utilities.getNav()
-  let titleText = ""
-  if (data.length < 1) {
-    titleText = "No vehicle found"
-  } else {
     titleText = data[0].inv_make + " " + data[0].inv_model
+    res.render("./inventory/detail", {
+      title: titleText,
+      nav,
+      detail,
+      errors: null,
+    })
+  } catch (error) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
   }
-  res.render("./inventory/detail", {
-    title: titleText,
-    nav,
-    detail,
-    errors: null,
-  })
 }
 
 invCont.forcedError = (req, res, next) => {

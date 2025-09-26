@@ -10,6 +10,21 @@ inventoryModel.getClassifications = async function(){
 }
 
 /* ***************************
+ *  Get classification name by id
+ * ************************** */
+inventoryModel.getClassificationNameById = async function(classification_id) {
+  try {
+    const data = await pool.query("SELECT classification_name FROM public.classification WHERE classification_id = $1", [classification_id])
+    return data.rows[0].classification_name
+  } catch (error) {
+    console.error("Classification doesn't exist.")
+    var err = new Error("Classification doesn't exist.");
+    err.status = 404;
+    next(err);
+  }
+}
+
+/* ***************************
  *  Get all inventory items and classification_name by classification_id
  * ************************** */
 inventoryModel.getInventoryByClassificationId = async function(classification_id) {
