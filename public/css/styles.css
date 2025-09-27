@@ -382,6 +382,13 @@ ul.management {
   padding-bottom: 1rem;
 }
 
+.flash-message {
+  font-weight: bold;
+  color: rgb(0, 120, 0);
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+}
+
   /**********************/
  /* 640px media query  */
 /**********************/

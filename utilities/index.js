@@ -89,7 +89,7 @@ Util.buildClassificationList = async function (classification_id = null) {
     let classificationList =
       '<select name="classification_id" id="classificationList" required>'
     classificationList += "<option value='' disabled "
-    if (classification_id == null) {
+    if (classification_id == null || classification_id == "") {
       classificationList += "selected "
     }
     classificationList += ">Choose a Classification</option>"

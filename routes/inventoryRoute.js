@@ -18,7 +18,7 @@ router.get("/unknown", utilities.handleErrors(invController.forcedError));
 router.get("/add-classification", utilities.handleErrors(invController.buildAddClassificationView));
 
 // Route to process the add classification view
-router.post("/add-classification", validateInventory.classificationRules(), validateInventory.checkClassData, utilities.handleErrors(invController.addClassification));
+router.post("/add-classification", validateInventory.classificationRules(), validateInventory.checkClassificationData, utilities.handleErrors(invController.addClassification));
 
 // Route to display the add inventory view
 router.get("/add-inventory", utilities.handleErrors(invController.buildAddInventoryView));

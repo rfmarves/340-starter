@@ -69,7 +69,6 @@ invCont.forcedError = (req, res, next) => {
 invCont.buildManagementView = async function (req, res, next) {
   const nav = await utilities.getNav()
   let message = req.flash("message")
-  console.log(message)
   res.render("./inventory/management", {
     title: "Inventory Management",
     nav,
@@ -79,10 +78,12 @@ invCont.buildManagementView = async function (req, res, next) {
 
 invCont.buildAddClassificationView = async function (req, res, next) {
   let nav = await utilities.getNav()
+  let message = req.flash("message")
   res.render("./inventory/add-classification", {
     title: "Add Classification",
     nav,
     errors: null,
+    message: null,
   })
 }
 
@@ -98,15 +99,15 @@ invCont.addClassification = async function (req, res, next) {
   )
 
   if (invClassificationResult) {
-    req.flash(
-      "notice",
-      `The ${classification_name} has been added.`
-    )
+    let message = `"${classification_name}" has been added to classifications.`
     nav = await utilities.getNav()
+    // const message = req.flash("message")
+    // res.redirect("/inv/add-classification")
     res.status(201).render("./inventory/add-classification", {
       title: "Add Classification",
       nav,
       errors: null,
+      message,
     })
   } else {
     req.flash("notice", "Sorry, the classification couldn't be added.")
@@ -132,24 +133,24 @@ invCont.buildAddInventoryView = async function (req, res, next) {
 
 invCont.addInventory = async function (req, res, next) {
   let nav = await utilities.getNav()
+  const imgPath = "/images/vehicles/"
   const { inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, classification_id } = req.body
   const invAddResult = await inventoryModel.addInventory(
-    inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, classification_id
+    inv_make, inv_model, inv_description, imgPath + inv_image, imgPath + inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, classification_id
   )
   if(invAddResult) {
-    console.log("recognized inventory was added")
     req.flash("message", `Vehicle added successfully.`)
     res.redirect("/inv")
   } else {
-    // console.log("path for inventory not added")
-    // let classificationSelectList = await utilities.buildClassificationList(classification_id)
-    // // req.flash("error", "Sorry, the vehicle couldn't be added.")
-    // res.status(501).render("./inventory/add-inventory", {
-    //   title: "Add Vehicle",
-    //   nav,
-    //   classificationSelectList,
-    //   errors: [{ msg: "Failed to add inventory item." }],
-    //   ...req.body,    })
+    console.log("path for inventory not added")
+    let classificationSelectList = await utilities.buildClassificationList(classification_id)
+    // req.flash("error", "Sorry, the vehicle couldn't be added.")
+    res.status(501).render("./inventory/add-inventory", {
+      title: "Add Vehicle",
+      nav,
+      classificationSelectList,
+      errors: [{ msg: "Failed to add inventory item." }],
+      ...req.body,    })
   }
 }
 

@@ -5,11 +5,16 @@
   res.redirect('/')
 } %>
 <% if (errors) { %>
-  <ul class="notice">
+  <ul class="error">
  <% errors.array().forEach(error => { %>
    <li><%= error.msg %></li>
 <%  }) %>
  </ul>
+<% } %>
+<% if (message) { %>
+  <div class="flash-message">
+    <p><%= message %></p>
+  </div>
 <% } %>
 
 <%# messages() %>

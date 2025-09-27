@@ -13,7 +13,6 @@ validateInventory.classificationRules = () => {
       body("classification_name")
       .trim()
       .escape()
-      .notEmpty()
       .isLength({ min: 3 })
       .withMessage("Please provide a classification name.")
       .custom(async (classification_name) => {
@@ -28,17 +27,18 @@ validateInventory.classificationRules = () => {
 /* ******************************
  * Check data and return errors or continue to add classification
  * ***************************** */
-validateInventory.checkClassData = async (req, res, next) => {
+validateInventory.checkClassificationData = async (req, res, next) => {
   const { classification_name } = req.body
   let errors = []
   errors = validationResult(req)
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav()
     res.render("./inventory/add-classification", {
-      errors,
       title: "Add Classification",
       nav,
       classification_name,
+      errors,
+      message: null,
     })
     return
   }
@@ -51,73 +51,64 @@ validateInventory.inventoryRules = (req, res, next) => {
       body("inv_make")
         .trim()
         .escape()
-        .notEmpty()
         .isLength({ min: 1 })
-        .withMessage("Please provide the vehicle make."), // on error this message is sent.
+        .withMessage("Please provide a valid vehicle make."), // on error this message is sent.
  
       // inv_model validation rules
       body("inv_model")
         .trim()
         .escape()
-        .notEmpty()
         .isLength({ min: 1 })
-        .withMessage("Please provide the vehicle model."), // on error this message is sent.
+        .withMessage("Please provide a valid vehicle model."), // on error this message is sent.
  
       // inv_description validation rules
       body("inv_description")
         .trim()
         .escape()
-        .notEmpty()
         .isLength({ min: 10 })
-        .withMessage("Please provide the vehicle description."), // on error this message is sent.
+        .withMessage("Please provide a valid vehicle description."), // on error this message is sent.
  
       // inv_image validation rules
       body("inv_image")
         .trim()
         .escape()
-        .notEmpty()
         .isLength({ min: 1 })
-        .withMessage("Please provide the vehicle image."), // on error this message is sent.
+        .withMessage("Please provide a valid vehicle image."), // on error this message is sent.
  
       // inv_thumbnail validation rules
       body("inv_thumbnail")
         .trim()
         .escape()
-        .notEmpty()
         .isLength({ min: 1 })
-        .withMessage("Please provide the vehicle thumbnail image."), // on error this message is sent.
+        .withMessage("Please provide a valid vehicle thumbnail image."), // on error this message is sent.
  
       // inv_price validation rules
       body("inv_price")
         .trim()
         .escape()
-        .notEmpty()
-        .isDecimal()
-        .withMessage("Please provide the vehicle price."), // on error this message is sent.
+        .isDecimal({min: 0})
+        .withMessage("Please provide a valid vehicle price."), // on error this message is sent.
 
       // inv_year validation rules
       body("inv_year")
         .trim()
         .escape()
-        .notEmpty()
-        .isInt()
-        .withMessage("Please provide the vehicle year."), // on error this message is sent.
+        .isInt({min:1886, max: new Date().getFullYear() + 1})
+        .withMessage("Please provide a valid vehicle year."), // on error this message is sent.
 
       // inv_miles validation rules
       body("inv_miles")
         .trim()
         .escape()
-        .notEmpty()
-        .isInt()
-        .withMessage("Please provide the vehicle miles."), // on error this message is sent.
+        .isInt({min:0})
+        .withMessage("Please provide valid vehicle miles."), // on error this message is sent.
 
       // inv_color validation rules
       body("inv_color")
         .trim()
         .escape()
-        .notEmpty()
         .isLength({ min: 1 })
-        .withMessage("Please provide the vehicle color."), // on error this message is sent.
+        .withMessage("Please provide a valid vehicle color."), // on error this message is sent.
 
       // classification_id validation rules
       body("classification_id")
