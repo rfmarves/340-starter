@@ -5,7 +5,14 @@
   res.redirect('/')
 } %>
 
-<%# messages() %>
+<% if (message) { %>
+  <div class="flash-message">
+    <p><%= message %></p>
+  </div>
+<% } %>
 
 <%# Managent link list %>
-<%- links %>
+<ul class="management">
+  <li><a href="/inv/add-classification">Add New Classification</a></li>
+  <li><a href="/inv/add-inventory">Add New Vehicle</a></li>
+</ul>

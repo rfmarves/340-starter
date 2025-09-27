@@ -24,7 +24,7 @@ router.post("/add-classification", validateInventory.classificationRules(), vali
 router.get("/add-inventory", utilities.handleErrors(invController.buildAddInventoryView));
 
 // Route to process the add inventory view
-// router.post("/add-inventory", validateInventory.inventoryRules(), validateInventory.checkInvData, utilities.handleErrors(invController.addInventory));
+router.post("/add-inventory", validateInventory.inventoryRules(), validateInventory.checkInvData, utilities.handleErrors(invController.addInventory));
 
 // Route for management view
 router.get("/", utilities.handleErrors(invController.buildManagementView));
