@@ -121,12 +121,15 @@ invCont.addClassification = async function (req, res, next) {
 
 invCont.buildAddInventoryView = async function (req, res, next) {
   let nav = await utilities.getNav()
-  let form = ""
-  res.render("./inventory/add-classification", {
+  let classificationSelectList = await utilities.buildClassificationList()
+  res.render("./inventory/add-inventory", {
     title: "Add Vehicle",
     nav,
-    form,
+    classificationSelectList,
     errors: null,
   })
 }
+
+invCont.addInventory = async function (req, res, next) {}
+
 module.exports = invCont

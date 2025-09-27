@@ -28,7 +28,7 @@ validateInventory.classificationRules = () => {
 /* ******************************
  * Check data and return errors or continue to add classification
  * ***************************** */
-validateInventory.checkInvData = async (req, res, next) => {
+validateInventory.checkClassData = async (req, res, next) => {
   const { classification_name } = req.body
   let errors = []
   errors = validationResult(req)
@@ -45,5 +45,8 @@ validateInventory.checkInvData = async (req, res, next) => {
   next()
 }
 
+validateInventory.inventoryRules = (req, res, next) => {}
+
+validateInventory.checkInvData = async (req, res, next) => {}
 
 module.exports = validateInventory
