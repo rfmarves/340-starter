@@ -16,6 +16,7 @@ const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
 const utilities = require("./utilities/")
 const bodyParser = require("body-parser")
+const cookieParser = require("cookie-parser")
 
 /* ***********************
  * Middleware
@@ -30,6 +31,8 @@ const bodyParser = require("body-parser")
   saveUninitialized: true,
   name: 'sessionId',
 }))
+app.use(cookieParser())
+app.use(utilities.checkJWTToken) // Check JWT token on all requests
 
 // Express Messages Middleware
 app.use(require('connect-flash')())
