@@ -389,6 +389,27 @@ ul.management {
   margin-bottom: 1rem;
 }
 
+#classificationList {
+  border-radius: 0.5rem;
+  padding: 0.2rem;
+  font-size: 1rem;
+}
+
+#inventoryDisplay {
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+#inventoryDisplay th,
+#inventoryDisplay td {
+  /* border: #606060 1px solid; */
+  padding: 0.3rem;
+}
+
+#inventoryDisplay tr {
+  border-bottom: 1px solid #606060;
+}
+
   /**********************/
  /* 640px media query  */
 /**********************/
