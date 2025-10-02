@@ -18,7 +18,7 @@ router.post("/register", regValidate.registationRules(), regValidate.checkRegDat
 router.post("/login", regValidate.loginRules(), regValidate.checkLoginData, utilities.handleErrors(accController.accountLogin))
 
 // Route to account view
-router.get("/", utilities.handleErrors(accController.buildViewAccount));
+router.get("/", utilities.checkLogin, utilities.handleErrors(accController.buildAccountManagement));
 
 
 module.exports = router;
