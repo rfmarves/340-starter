@@ -5,9 +5,21 @@
   res.redirect('/')
 } %>
 
+<% if (errors) { %>
+  <div class="flash-message">
+    <p><%= errors %></p>
+  </div>
+<% } %>
+
 <% if (message) { %>
   <div class="flash-message">
     <p><%= message %></p>
+  </div>
+<% } %>
+
+<% if (notice) { %>
+  <div class="flash-message">
+    <p><%= notice %></p>
   </div>
 <% } %>
 

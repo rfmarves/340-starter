@@ -35,6 +35,12 @@ router.get("/edit/:inventoryId", utilities.handleErrors(invController.buildEditI
 // Route to update existing inventory item
 router.post("/update/",validateInventory.inventoryRules(), validateInventory.checkUpdateData, utilities.handleErrors(invController.updateInventory));
 
+// Route to create the delete inventory view
+router.get("/delete/:inventoryId", utilities.handleErrors(invController.buildDeleteInventoryView));
+
+// Route to delete an existing inventory item
+router.post("/delete/", utilities.handleErrors(invController.deleteInventory));
+
 // Route for management view
 router.get("/", utilities.handleErrors(invController.buildManagementView));
 
