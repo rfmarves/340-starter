@@ -133,9 +133,12 @@ invCont.buildAddInventoryView = async function (req, res, next) {
   })
 }
 
+/* ***************************
+ *  Add new inventory item
+ * ************************** */
 invCont.addInventory = async function (req, res, next) {
   let nav = await utilities.getNav()
-  const imgPath = "/images/vehicles/"
+  const imgPath = ""
   const { inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, classification_id } = req.body
   const invAddResult = await inventoryModel.addInventory(
     inv_make, inv_model, inv_description, imgPath + inv_image, imgPath + inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, classification_id
@@ -197,5 +200,32 @@ invCont.buildEditInventoryView = async (req, res, next) => {
   })
 }
 
+/* ***************************
+ *  Update inventory item
+ * ************************** */
+invCont.updateInventory = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  const imgPath = ""
+  const { inv_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, classification_id } = req.body
+  const updateResult = await inventoryModel.updateInventory(
+    inv_id, inv_make, inv_model, inv_description, imgPath + inv_image, imgPath + inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, classification_id
+  )
+  if(updateResult) {
+    const itemName = updateResult.inv_make + " " + updateResult.inv_model
+    req.flash("notice", `The ${itemName} was successfully updated.`)
+    res.redirect("/inv")
+  } else {
+    console.log("path for inventory not updated")
+    const itemName = `${inv_make} ${inv_model}`
+    req.flash("notice", "Sorry, the update failed.")
+    let classificationSelectList = await utilities.buildClassificationList(classification_id)
+    res.status(501).render("/inv/edit-inventory/", {
+      title: "Edit" + itemName,
+      nav,
+      classificationSelectList,
+      errors: [{ msg: "Failed to add inventory item." }],
+      ...req.body,    })
+  }
+}
 
 module.exports = invCont

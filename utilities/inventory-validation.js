@@ -71,14 +71,12 @@ validateInventory.inventoryRules = (req, res, next) => {
       // inv_image validation rules
       body("inv_image")
         .trim()
-        .escape()
         .isLength({ min: 1 })
         .withMessage("Please provide a valid vehicle image."), // on error this message is sent.
  
       // inv_thumbnail validation rules
       body("inv_thumbnail")
         .trim()
-        .escape()
         .isLength({ min: 1 })
         .withMessage("Please provide a valid vehicle thumbnail image."), // on error this message is sent.
  
@@ -125,6 +123,8 @@ validateInventory.inventoryRules = (req, res, next) => {
 
     ]
 }
+
+// Validates inventory data when adding a new vehicle
 validateInventory.checkInvData = async (req, res, next) => {
   const { inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, classification_id } = req.body
   let errors = []
@@ -145,4 +145,24 @@ validateInventory.checkInvData = async (req, res, next) => {
   next()
 }
 
+// Validates inventory data when updating an existing vehicle
+validateInventory.checkUpdateData = async (req, res, next) => {
+  const { inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, classification_id } = req.body
+  let errors = []
+  errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    let classificationSelectList = await utilities.buildClassificationList(classification_id)
+    res.render("./inventory/add-inventory", {
+      errors,
+      title: "Edit " + inv_make + " " + inv_model,
+      nav,
+      classificationSelectList,
+      inv_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color,
+      errors,
+    })
+    return
+  }
+  next()
+}
 module.exports = validateInventory

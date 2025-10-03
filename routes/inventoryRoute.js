@@ -32,6 +32,9 @@ router.get("/getInventory/:classification_id", utilities.handleErrors(invControl
 // Route to edit an existing inventory item
 router.get("/edit/:inventoryId", utilities.handleErrors(invController.buildEditInventoryView));
 
+// Route to update existing inventory item
+router.post("/update/",validateInventory.inventoryRules(), validateInventory.checkUpdateData, utilities.handleErrors(invController.updateInventory));
+
 // Route for management view
 router.get("/", utilities.handleErrors(invController.buildManagementView));
 
