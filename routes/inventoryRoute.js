@@ -29,6 +29,9 @@ router.post("/add-inventory", validateInventory.inventoryRules(), validateInvent
 // Route to work with editing inventory
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 
+// Route to edit an existing inventory item
+router.get("/edit/:inventoryId", utilities.handleErrors(invController.buildEditInventoryView));
+
 // Route for management view
 router.get("/", utilities.handleErrors(invController.buildManagementView));
 
