@@ -125,19 +125,12 @@ accCont.accountLogin = async function(req, res) {
 * *************************************** */
 accCont.buildAccountManagement = async function (req, res, next) {
   let nav = await utilities.getNav()
-  let account_view = ""
-  if (res.locals.loggedin) {
-    account_view = "You're logged in"
-  } else {
-    account_view = "Please log in"
-    // req.flash("notice", "Please log in.")
-    // return res.redirect("/account/login")
-  }
   res.render("account/account-management", {
     title: "Account",
     nav,
     errors: null,
-    account_view: account_view,
+    notice: null,
+    message: null,
   })
 }
 

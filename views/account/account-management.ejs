@@ -1,10 +1,31 @@
-<h1>Account</h1>
+<h1>Account Managemnet</h1>
 <%- messages() %>
+
 <% if (errors) { %>
-  <ul class="notice">
- <% errors.array().forEach(error => { %>
-   <li><%= error.msg %></li>
-<%  }) %>
- </ul>
+  <div class="flash-message">
+    <p><%= errors %></p>
+  </div>
 <% } %>
-<%- account_view %>
+
+<% if (message) { %>
+  <div class="flash-message">
+    <p><%= message %></p>
+  </div>
+<% } %>
+
+<% if (notice) { %>
+  <div class="flash-message">
+    <p><%= notice %></p>
+  </div>
+<% } %>
+
+<% if (locals.loggedin)  { %>
+<H2>Welcome <%- locals.accountData.account_firstname %> </H2>
+<H3>Account Management</H3>
+<p><a href="./update/">Update Account Information</a></p>
+<% } %>
+
+<% if (locals.accountData.account_type === 'Employee' || locals.accountData.account_type === 'Admin') { %>
+<H3>Inventory Management</H3>
+<p><a href="/inv/">Access Inventory Management</a></p>
+<% } %>

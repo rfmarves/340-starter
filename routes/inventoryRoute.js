@@ -4,7 +4,6 @@ const router = new express.Router()
 const invController = require("../controllers/invController")
 const utilities = require("../utilities/")
 const validateInventory = require('../utilities/inventory-validation')
-const validateAccount = require('../utilities/account-validation')
 
 // Route to build inventory by classification view
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
@@ -16,33 +15,33 @@ router.get("/detail/:inventoryId", utilities.handleErrors(invController.buildByI
 router.get("/unknown", utilities.handleErrors(invController.forcedError));
 
 // Route to display the add classification view
-router.get("/add-classification", validateAccount.adminOrEmployeeRequired, utilities.handleErrors(invController.buildAddClassificationView));
+router.get("/add-classification", utilities.adminOrEmployeeRequired, utilities.handleErrors(invController.buildAddClassificationView));
 
 // Route to process the add classification view
-router.post("/add-classification", validateAccount.adminOrEmployeeRequired, validateInventory.classificationRules(), validateInventory.checkClassificationData, utilities.handleErrors(invController.addClassification));
+router.post("/add-classification", utilities.adminOrEmployeeRequired, validateInventory.classificationRules(), validateInventory.checkClassificationData, utilities.handleErrors(invController.addClassification));
 
 // Route to display the add inventory view
-router.get("/add-inventory", validateAccount.adminOrEmployeeRequired, utilities.handleErrors(invController.buildAddInventoryView));
+router.get("/add-inventory", utilities.adminOrEmployeeRequired, utilities.handleErrors(invController.buildAddInventoryView));
 
 // Route to process the add inventory view
-router.post("/add-inventory", validateAccount.adminOrEmployeeRequired, validateInventory.inventoryRules(), validateInventory.checkInvData, utilities.handleErrors(invController.addInventory));
+router.post("/add-inventory", utilities.adminOrEmployeeRequired, validateInventory.inventoryRules(), validateInventory.checkInvData, utilities.handleErrors(invController.addInventory));
 
 // Route to work with editing inventory
-router.get("/getInventory/:classification_id", validateAccount.adminOrEmployeeRequired, utilities.handleErrors(invController.getInventoryJSON))
+router.get("/getInventory/:classification_id", utilities.adminOrEmployeeRequired, utilities.handleErrors(invController.getInventoryJSON))
 
 // Route to edit an existing inventory item
-router.get("/edit/:inventoryId", validateAccount.adminOrEmployeeRequired, utilities.handleErrors(invController.buildEditInventoryView));
+router.get("/edit/:inventoryId", utilities.adminOrEmployeeRequired, utilities.handleErrors(invController.buildEditInventoryView));
 
 // Route to update existing inventory item
-router.post("/update/", validateAccount.adminOrEmployeeRequired, validateInventory.inventoryRules(), validateInventory.checkUpdateData, utilities.handleErrors(invController.updateInventory));
+router.post("/update/", utilities.adminOrEmployeeRequired, validateInventory.inventoryRules(), validateInventory.checkUpdateData, utilities.handleErrors(invController.updateInventory));
 
 // Route to create the delete inventory view
-router.get("/delete/:inventoryId", validateAccount.adminOrEmployeeRequired, utilities.handleErrors(invController.buildDeleteInventoryView));
+router.get("/delete/:inventoryId", utilities.adminOrEmployeeRequired, utilities.handleErrors(invController.buildDeleteInventoryView));
 
 // Route to delete an existing inventory item
-router.post("/delete/", validateAccount.adminOrEmployeeRequired, utilities.handleErrors(invController.deleteInventory));
+router.post("/delete/", utilities.adminOrEmployeeRequired, utilities.handleErrors(invController.deleteInventory));
 
 // Route for management view
-router.get("/",validateAccount.adminOrEmployeeRequired,  utilities.handleErrors(invController.buildManagementView));
+router.get("/",utilities.adminOrEmployeeRequired,  utilities.handleErrors(invController.buildManagementView));
 
 module.exports = router;
