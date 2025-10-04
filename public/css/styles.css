@@ -89,6 +89,7 @@ header .siteName {
   display: block;
   width: 25rem;
   margin-right: 0.5rem;
+  text-align: right;
 }
 
 nav {

@@ -119,4 +119,35 @@ validate.checkLoginData = async (req, res, next) => {
   next()
 }
 
+/* ******************************
+ * Admin or employee login required
+ * ***************************** */
+validate.loggedIn = async (req, res, next) => {
+  // check if user is logged in
+  if (!res.locals.loggedin) {
+    req.flash("notice", "You must be logged in to access that page.")
+    return res.redirect("/account/login")
+  }
+}
+
+/* ******************************
+ * Admin or employee login required
+ * ***************************** */
+validate.adminOrEmployeeRequired = async (req, res, next) => {
+  // check if user is logged in
+  if (!res.locals.loggedin) {
+    req.flash("notice", "You must be logged in to access that page.")
+    return res.redirect("/account/login")
+  }
+
+  // check if user is admin or employee
+	const accountType = res.locals.accountData.account_type
+	if (accountType === 'Employee' || accountType === 'Admin') {
+		next()
+	} else {
+		req.flash('error', 'You do not have permission to access this resource.')
+		return res.redirect('/account/login')
+	}
+}
+
 module.exports = validate
