@@ -170,7 +170,7 @@ validate.checkUpdateData = async (req, res, next) => {
   } else {
     const { account_email } = req.body
     const emailExists = await accountModel.checkExistingEmail(account_email)
-    const accountData = await accountModel.getAccountById(Number(req.body.account_id))
+    const accountData = await accountModel.getAccountById(req.body.account_id)
     const original_email = accountData.account_email
     if (emailExists && (account_email !== original_email)) {
       req.flash('error', 'Email exists. Please use different email.')
@@ -216,19 +216,22 @@ validate.passwordUpdateRules = () => {
  * Check data and return errors or continue to registration
  * ***************************** */
 validate.checkUpdatePassword = async (req, res, next) => {
-  const { account_firstname, account_lastname, account_email } = req.body
+  const { account_id, account_password } = req.body
   let errors = []
   errors = validationResult(req)
   if (!errors.isEmpty()) {
-    let nav = await utilities.getNav()
-    res.render("account/register", {
-      errors,
-      title: "Registration",
-      nav,
-      account_firstname,
-      account_lastname,
-      account_email,
-    })
+      let nav = await utilities.getNav()
+      res.render("account/update", {
+        title: "Update Account Information",
+        nav,
+        account_id: account_id,
+        account_firstname: req.body.account_firstname,
+        account_lastname: req.body.account_lastname,
+        account_email: req.body.account_email,
+        errors: null,
+        notice: null,
+        message: null,
+      })
     return
   }
   next()

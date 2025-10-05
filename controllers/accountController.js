@@ -174,7 +174,6 @@ accCont.updateAccountData = async function(req, res) {
       "notice",
       `Congratulations, ${account_firstname}, your account has been updated.`
     )
-    console.log("updating access token.")
     const accountData = await accountModel.getAccountById(account_id)
     const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
     if(process.env.NODE_ENV === 'development') {
@@ -182,15 +181,57 @@ accCont.updateAccountData = async function(req, res) {
     } else {
       res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
     }
-    // return res.redirect("/account/")
-    res.status(201).redirect("/account/update")
+    res.status(201).redirect("/account/")
   } else {
     req.flash("error", "Sorry, the registration failed.")
     res.status(501).redirect("/account/update")
   }
 }
 
-accCont.updateAccountPassword = async function(req, res) {}
+accCont.updateAccountPassword = async function(req, res) {
+  const nav = await utilities.getNav()
+  const { account_id, account_password } = req.body
+
+  // Hash the password before storing
+  let hashedPassword
+  try {
+    // regular password and cost (salt is generated automatically)
+    hashedPassword = await bcrypt.hashSync(account_password, 10)
+  } catch (error) {
+    req.flash("notice", 'Sorry, there was an error processing the password change.')
+      res.render("account/update", {
+        title: "Update Account Information",
+        nav,
+        account_id: account_id,
+        account_firstname: req.body.account_firstname,
+        account_lastname: req.body.account_lastname,
+        account_email: req.body.account_email,
+        errors: null,
+        notice: null,
+        message: null,
+      })
+  }
+
+  const passwordUpdateResult = await accountModel.updateAccountPassword(
+    account_id,
+    hashedPassword
+  )
+
+  if (passwordUpdateResult) {
+    req.flash(
+      "notice",
+      `Congratulations, your password has been updated.`
+    )
+    const accountData = await accountModel.getAccountById(account_id)
+    const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
+    if(process.env.NODE_ENV === 'development') {
+      res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+    } else {
+      res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
+    }
+    res.status(201).redirect("/account/")
+  }
+}
 
 accCont.logout = async function(req, res) {}
 

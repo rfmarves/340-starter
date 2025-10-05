@@ -48,7 +48,7 @@ accountModel.getAccountById = async function(account_id) {
   try {
     const result = await pool.query(
       'SELECT account_id, account_firstname, account_lastname, account_email, account_type, account_password FROM account WHERE account_id = $1',
-      [account_id])
+      [Number(account_id)])
     return result.rows[0]
   } catch (error) {
     return new Error("No matching id found")
@@ -73,8 +73,8 @@ accountModel.updateAccountData = async function(account_id, account_firstname, a
 * *************************** */
 accountModel.updateAccountPassword = async function(account_id, account_password){
   try {
-    const sql = "UPDATE public.account SET account_password = $1, WHERE account_id = $2 RETURNING *"
-    return await pool.query(sql, [account_password, account_id])
+    const sql = "UPDATE public.account SET account_password = $1 WHERE account_id = $2 RETURNING *"
+    return await pool.query(sql, [account_password, Number(account_id)])
   } catch (error) {
     return error.message
   }
