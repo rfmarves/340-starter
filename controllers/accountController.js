@@ -121,17 +121,77 @@ accCont.accountLogin = async function(req, res) {
 }
 
 /* ****************************************
-*  Deliver logged-in view
+*  Deliver Account Management view
 * *************************************** */
 accCont.buildAccountManagement = async function (req, res, next) {
   let nav = await utilities.getNav()
   res.render("account/account-management", {
-    title: "Account",
+    title: "Account Management",
     nav,
     errors: null,
     notice: null,
     message: null,
   })
 }
+
+/* ****************************************
+*  Deliver Update Account Information view
+* *************************************** */
+accCont.buildAccountUpdate = async function (req, res, next) {
+  const nav = await utilities.getNav()
+  const account_id        = res.locals.accountData.account_id
+  const account_firstname = res.locals.accountData.account_firstname
+  const account_lastname  = res.locals.accountData.account_lastname
+  const account_email     = res.locals.accountData.account_email
+  res.render("account/update", {
+    title: "Update Account Information",
+    nav,
+    account_id,
+    account_firstname,
+    account_lastname,
+    account_email,
+    errors: null,
+    notice: null,
+    message: null,
+  })
+}
+
+/* ****************************************
+*  Process Update Account Information
+* *************************************** */
+accCont.updateAccountData = async function(req, res) {
+  let nav = await utilities.getNav()
+  const { account_id, account_firstname, account_lastname, account_email } = req.body
+  const updateResult = await accountModel.updateAccountData(
+    account_id,
+    account_firstname,
+    account_lastname,
+    account_email,
+  )
+
+  if (updateResult) {
+    req.flash(
+      "notice",
+      `Congratulations, ${account_firstname}, your account has been updated.`
+    )
+    console.log("updating access token.")
+    const accountData = await accountModel.getAccountById(account_id)
+    const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
+    if(process.env.NODE_ENV === 'development') {
+      res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+    } else {
+      res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
+    }
+    // return res.redirect("/account/")
+    res.status(201).redirect("/account/update")
+  } else {
+    req.flash("error", "Sorry, the registration failed.")
+    res.status(501).redirect("/account/update")
+  }
+}
+
+accCont.updateAccountPassword = async function(req, res) {}
+
+accCont.logout = async function(req, res) {}
 
 module.exports = accCont

@@ -219,7 +219,6 @@ invCont.updateInventory = async function (req, res, next) {
     req.flash("notice", `The ${itemName} was successfully updated.`)
     res.redirect("/inv")
   } else {
-    console.log("path for inventory not updated")
     const itemName = `${inv_make} ${inv_model}`
     req.flash("notice", "Sorry, the update failed.")
     let classificationSelectList = await utilities.buildClassificationList(classification_id)

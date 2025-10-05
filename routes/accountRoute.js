@@ -17,6 +17,15 @@ router.post("/register", regValidate.registationRules(), regValidate.checkRegDat
 // Process the login attempt
 router.post("/login", regValidate.loginRules(), regValidate.checkLoginData, utilities.handleErrors(accController.accountLogin))
 
+// Route to update account view
+router.get("/update", utilities.checkLogin, utilities.handleErrors(accController.buildAccountUpdate));
+
+// Route to process account update
+router.post("/update/data", utilities.checkLogin, regValidate.dataUpdateRules(), regValidate.checkUpdateData, utilities.handleErrors(accController.updateAccountData))
+
+// Route to process password update
+router.post("/update/password", utilities.checkLogin, regValidate.passwordUpdateRules(), regValidate.checkUpdatePassword, utilities.handleErrors(accController.updateAccountPassword))
+
 // Route to account view
 router.get("/", utilities.checkLogin, utilities.handleErrors(accController.buildAccountManagement));
 

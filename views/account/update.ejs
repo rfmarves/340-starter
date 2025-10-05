@@ -1,0 +1,46 @@
+<h1><%= title %></h1>
+<!-- Space for feedback from other pages -->
+<%- messages() %>
+<% if (errors) { %>
+  <div class="flash-message">
+    <p><%= errors %></p>
+  </div>
+<% } %>
+
+<% if (message) { %>
+  <div class="flash-message">
+    <p><%= message %></p>
+  </div>
+<% } %>
+<% if (notice) { %>
+  <div class="flash-message">
+    <p><%= notice %></p>
+  </div>
+<% } %>
+
+<!-- Page contents -->
+<H2>Account data</H2>
+<div class="formContainer">
+<form action="/account/update/data" id="accountUpdate" method="post">
+        <input type="text" id="account_id" hidden name="account_id" value="<%= account_id %>">
+        <label for="account_first_name">First name:</label>
+        <input type="text" id="account_firstname" name="account_firstname" value="<%= locals.account_firstname ? locals.account_firstname : account_firstname  %>" required>
+        <label for="account_last_name">Last name:</label>
+        <input type="text" id="account_lastname" name="account_lastname" value="<%= locals.account_lastname ? locals.account_lastname : account_lastname %>" required>
+        <label for="account_email">Email:</label>
+        <input type="email" id="account_email" name="account_email" value="<%= locals.account_email ? locals.account_email : locals.account_email %>" required>
+        <button type="submit" class="button">Update Information</button>
+</form>
+</div>
+<H2>Change Password</H2>
+<div class="formContainer">
+<form action="/account/update/password" id="passwordUpdate" method="post">
+        <input type="text" id="account_id" hidden name="account_id" value="<%= locals.account_id ? locals.account_id : account_id %>">
+        <label for="account_password">Password:</label>
+        <input type="password" id="account_password" name="account_password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required>
+        <span id="passwordButton">Show Password</span>
+        <p class="passwordRequirements"><small>Passwords must be at least 12 characters and contain at least 1 uppercase letter, 1 number, and 1 special character.</small></p>
+        <button type="submit" class="button">Change Password</button>
+</form>
+</div>
+<script src="/js/script.js"></script>
