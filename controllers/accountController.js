@@ -188,6 +188,9 @@ accCont.updateAccountData = async function(req, res) {
   }
 }
 
+/* ****************************************
+ *  Process password change
+ * ************************************ */
 accCont.updateAccountPassword = async function(req, res) {
   const nav = await utilities.getNav()
   const { account_id, account_password } = req.body
@@ -233,6 +236,12 @@ accCont.updateAccountPassword = async function(req, res) {
   }
 }
 
-accCont.logout = async function(req, res) {}
+/* ****************************************
+ *  Log out
+ * ************************************ */
+accCont.logout = async function(req, res) {
+  res.clearCookie("jwt")
+  res.redirect("/")
+}
 
 module.exports = accCont

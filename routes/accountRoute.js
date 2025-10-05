@@ -17,6 +17,9 @@ router.post("/register", regValidate.registationRules(), regValidate.checkRegDat
 // Process the login attempt
 router.post("/login", regValidate.loginRules(), regValidate.checkLoginData, utilities.handleErrors(accController.accountLogin))
 
+// Route to logout
+router.get("/logout", utilities.handleErrors(accController.logout));
+
 // Route to update account view
 router.get("/update", utilities.checkLogin, utilities.handleErrors(accController.buildAccountUpdate));
 
