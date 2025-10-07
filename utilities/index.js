@@ -110,6 +110,30 @@ Util.buildClassificationList = async function (classification_id = null) {
     return classificationList
   }
 
+
+/* **************************************
+* Build the comment list view HTML for inventory item
+* ************************************ */
+Util.buildCommentsHtml = async function(data){
+  let commentList = '<div id="commentList">'
+  if(data.length > 0){
+    data.forEach(comment => { 
+      commentList += '<div class="comment">'
+      commentList +=  '<div class="commentHeader"><span class="commentor">'
+      commentList += comment.account_firstname 
+      commentList += '</span> wrote on ' 
+      commentList += new Intl.DateTimeFormat('en-US').format(comment.comment_date) 
+      commentList += '</div><div class="commentText">'
+      commentList += comment.comment_text
+      commentList += '</div></div>'
+    })
+  } else { 
+    commentList += '<div class="noComments">No comments here yet. Be the first one to leave a comment</div>'
+  }
+  commentList += '</div>'
+  return commentList
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
