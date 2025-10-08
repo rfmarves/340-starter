@@ -289,6 +289,27 @@ footer a {
   background-color: #f0f0f0;
 }
 
+.reviewHeader {
+  border-bottom: solid 0.15rem;
+}
+
+span.reviewer {
+    font-weight: bold;
+}
+
+.commentText {
+    padding: 0.5rem;
+}
+
+.postReviews {
+    margin-top: 0.5rem;
+    font-style: italic;
+}
+
+.noReviews {
+    background-color: #bfffbf;
+}
+
   /********************/
  /* Flash messages   */
 /********************/

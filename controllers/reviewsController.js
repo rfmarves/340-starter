@@ -10,7 +10,11 @@ reviewsCont.buildByInventoryId = async function(req, res, next) {
   try {
     let nav = await utilities.getNav()
     const inventory_id = req.params.inventoryId
-    let reviewList = await this.buildReviewHtmlSegment(inventory_id)
+    let account_id = null
+    if (res.locals.loggedin) {
+      account_id = res.locals.accountData.account_id
+    }
+    let reviewList = await this.buildReviewHtmlSegment(inventory_id, account_id)
     res.render("./reviews/item-reviews", {
       title: "Reviews",
       nav,
