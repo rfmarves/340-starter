@@ -62,7 +62,7 @@ app.use("/inv", inventoryRoute)
 // Account route
 app.use("/account", require("./routes/accountRoute"))
 // Comments route
-app.use("/comment", require("./routes/commentRoute"))
+app.use("/review", require("./routes/reviewRoute"))
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})

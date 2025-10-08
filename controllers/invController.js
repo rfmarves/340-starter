@@ -1,5 +1,6 @@
 const inventoryModel = require("../models/inventory-model")
-const utilities = require("../utilities/")
+const utilities = require("../utilities/");
+const reviewsCont = require("./reviewsController");
 
 const invCont = {}
 
@@ -39,18 +40,26 @@ invCont.buildByClassificationId = async function (req, res, next) {
  * ************************** */
 invCont.buildByInventoryId = async function (req, res, next) {
   const inventory_id = req.params.inventoryId
-  let data = []
-  let detail = ""
-  let titleText = ""
+  let account_id = null
+  if (res.locals.loggedin) {
+    account_id = res.locals.accountData.account_id
+  }
+  let data
+  let detail
+  let titleText
+  let reviews
   let nav = await utilities.getNav()
   try {
     data = await inventoryModel.getInventoryByInventoryId(inventory_id)
     detail = await utilities.buildInventoryDetail(data)
     titleText = data[0].inv_make + " " + data[0].inv_model
+    reviews = await reviewsCont.buildReviewHtmlSegment(inventory_id, account_id)
     res.render("./inventory/detail", {
       title: titleText,
       nav,
       detail,
+      reviews,
+      inventory_id,
       errors: null,
     })
   } catch (error) {
