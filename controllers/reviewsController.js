@@ -1,3 +1,4 @@
+const { render } = require("ejs")
 const reviewsModel = require("../models/reviews-model")
 const utilities = require("../utilities")
 
@@ -62,7 +63,7 @@ reviewsCont.buildReviewHtmlSegment = async function(inv_id, account_id) {
     if (reviewWritten) {
       reviewList += 'Thank you for writing a review for this item!'
     } else {
-      reviewList += '<a href="/review/new/' + inv_id + '>Write a review</a>'
+      reviewList += `<a href="/review/new/${inv_id}">Write a review</a>`
     }
   }
   reviewList += '</div>'
@@ -109,8 +110,20 @@ reviewsCont.buildReviewListByUserHtmlSegment = async function(account_id) {
 //***********************************************************
 reviewsCont.createReviewInput = async function(req, res, next) {
     const nav = await utilities.getNav()
-    const inventory_id = req.params.inv_id
+    const inv_id = req.params.inv_id
+    const invObject = await inventoryModel.getInventoryByInventoryId(inv_id)
+    const invData = invObject[0]
     const account_id = res.locals.accountData.account_id
+    const title = `Review for ${invData.inv_year} ${invData.inv_make} ${invData.inv_model}:`
+    res.render("./reviews/new-review", {
+      title: title,
+      nav,
+      inv_id,
+      account_id,
+      errors: null,
+      message: null,
+      notice: null,
+    })
 }
 reviewsCont.createReviewPost = async function(req, res, next) {}
 
