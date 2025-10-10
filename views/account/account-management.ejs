@@ -29,3 +29,8 @@
 <H3>Inventory Management</H3>
 <p><a href="/inv/">Access Inventory Management</a></p>
 <% } %>
+
+<% if (locals.loggedin)  { %>
+<h3>My Reviews</h3>
+<%- reviewsList %>
+<% } %>
