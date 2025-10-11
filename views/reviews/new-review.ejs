@@ -21,12 +21,12 @@
 
 <%# Add Review form %>
 <div class="formContainer">
-    <form id="newReviewForm" action="/review/new" method="post">
+    <form id="newReviewForm" action="<%= actionRoute %>" method="post">
         <input type="hidden" name="inv_id" value="<%= locals.inv_id ? locals.inv_id : inv_id %>">
         <input type="hidden" name="account_id" value="<%= locals.account_id ? locals.account_id : account_id %>">
         <label for="review_text">Enter your review here:</label>
         <textarea id="review_text" name="review_text" pattern="^[/^[\x20-\x7E]*$/]{10,}$" placeholder="Enter review text here" required><%- locals.review_text %></textarea>
-        <button type="submit" class="button">Add</button>
+        <button type="submit" class="button"><%= buttonName %></button>
     </form>
 </div>
 

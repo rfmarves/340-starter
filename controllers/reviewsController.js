@@ -120,6 +120,8 @@ reviewsCont.createReviewInput = async function(req, res, next) {
     nav,
     inv_id,
     account_id,
+    actionRoute: "/review/new",
+    buttonName: "Add",
     errors: null,
     message: null,
     notice: null,
@@ -144,6 +146,8 @@ reviewsCont.createReviewPost = async function(req, res, next) {
     res.status(501).render("./reviews/new-review", {
       title: title,
       nav,
+      actionRoute: "/review/new",
+      buttonName: "Add",
       message: null,
       notice: null,
       errors: [{msg: "Failed to add review."}],
@@ -154,8 +158,58 @@ reviewsCont.createReviewPost = async function(req, res, next) {
 //***********************************************************
 //*  Edit a review 
 //***********************************************************
-reviewsCont.editReviewView = async function(req, res, next) {}
-reviewsCont.editReviewUpdate = async function(req, res, next) {}
+reviewsCont.editReviewView = async function(req, res, next) {
+  const nav = await utilities.getNav()
+  const review_id = req.params.review_id
+  const dataList = await reviewsModel.getReviewById(review_id)
+  const data = dataList[0]
+  const title = `Edit review for ${data.inv_year} ${data.inv_make} ${data.inv_model}:`
+  const referrerPage = req.get('Referer')
+  req.session.returnTo = referrerPage
+  req.session.review_id = review_id
+  res.render("./reviews/new-review", {
+    title: title,
+    nav,
+    actionRoute: "/review/edit",
+    buttonName: "Update",
+    inv_id: data.inv_id,
+    account_id: data.account_id,
+    review_text: data.review_text,
+    errors: null,
+    message: null,
+    notice: null,
+  })
+}
+
+//***********************************************************
+//*  Post review update
+//***********************************************************
+reviewsCont.editReviewUpdate = async function(req, res, next) {
+  const nav = await utilities.getNav()
+  const { review_text, inv_id } = req.body
+  const review_id = req.session.review_id
+  const redirectTo = req.session.returnTo || `/inv/detail/${inv_id}`
+  const updateReviewResult = await reviewsModel.updateReview(review_id, review_text)
+  if(updateReviewResult) {
+    req.flash("message", "Review updated successfully.")
+    delete req.session.review_id
+    return res.redirect(redirectTo)
+  } else {
+    const invObject = await inventoryModel.getInventoryByInventoryId(inv_id)
+    const invData = invObject[0]
+    const title = `Edit review for ${invData.inv_year} ${invData.inv_make} ${invData.inv_model}:`
+    console.log("path for review not edited")
+    res.status(501).render("./reviews/new-review", {
+      title: title,
+      nav,
+      actionRoute: "/review/edit",
+      buttonName: "Update",
+      message: null,
+      notice: null,
+      errors: [{msg: "Failed to add review."}],
+      ...req.body,})
+  }
+}
 
 //***********************************************************
 //*  Delete a review 

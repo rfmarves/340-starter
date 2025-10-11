@@ -56,7 +56,7 @@ reviewsModel.getReviewById = async function(review_id) {
       ON r.inv_id = i.inv_id 
       JOIN public.account AS a
       ON r.account_id = a.account_id
-      WHERE r.inv_id = $1`,
+      WHERE r.review_id = $1`,
       [review_id]
     )
     return data.rows
@@ -83,11 +83,11 @@ reviewsModel.addReview = async function(review_text, inv_id, account_id) {
 // ****************************************************************************
 //  Updates a review text
 // ****************************************************************************
-reviewsModel.updateReview = async function(comment_id, comment_text) {
+reviewsModel.updateReview = async function(review_id, review_text) {
   try {
     const sql = `UPDATE public.reviews SET review_text = $1 
                   WHERE review_id = $2 RETURNING *`
-    return await pool.query(sql, [review_text,review_id])
+    return await pool.query(sql, [review_text, review_id])
   } catch (error) {
     console.error("updateReview: " + error)
     return error.message

@@ -108,6 +108,7 @@ accCont.accountLogin = async function(req, res) {
         res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
       }
       const redirectTo = req.session.returnTo || '/account/'; // Fallback to '/account/' if no page saved
+      delete req.session.returnTo
       return res.redirect(redirectTo)
     }
     else {

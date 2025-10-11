@@ -15,7 +15,7 @@ router.get("/new/:inv_id", reviewsController.createReviewInput);
 router.post("/new/", reviewsController.createReviewPost);
 
 // Route to view for editing a review
-router.get("/edit/:inv_id", reviewsController.editReviewView);
+router.get("/edit/:review_id", reviewsController.editReviewView);
 
 // Route to update review
 router.post("/edit/", reviewsController.editReviewUpdate);
