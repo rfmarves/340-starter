@@ -37,6 +37,7 @@ reviewsModel.getReviewsByAccountId = async function(account_id) {
       WHERE r.account_id = $1`,
       [account_id]
     )
+    console.log(data.rows)
     return data.rows
   } catch (error) {
     console.error("getReviewsByAccountId error " + error)
@@ -70,7 +71,7 @@ reviewsModel.getReviewById = async function(review_id) {
 // ****************************************************************************
 reviewsModel.addReview = async function(review_text, inv_id, account_id) {
   try {
-    const sql = `INSERT INTO reviews (review_text, account_id, inv_id) 
+    const sql = `INSERT INTO reviews (review_text, inv_id, account_id) 
                   VALUES ($1, $2, $3) RETURNING *`
     return await pool.query(sql, [review_text, inv_id, account_id])
   } catch (error) {

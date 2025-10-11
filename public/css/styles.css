@@ -324,6 +324,7 @@ span.reviewer {
   /********************/
  /* Flash messages   */
 /********************/
+ul.message,
 ul.notice,
 ul.error {
   font-weight: bold;
@@ -331,6 +332,7 @@ ul.error {
   padding-left: 2rem;
 }
 
+ul.message,
 ul.notice {
     color: rgb(3, 100, 16);
 }

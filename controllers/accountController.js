@@ -12,6 +12,8 @@ const accCont = {}
 * *************************************** */
 accCont.buildLogin = async function (req, res, next) {
   let nav = await utilities.getNav()
+  const referrerPage = req.get('Referer')
+  req.session.returnTo = referrerPage
   res.render("account/login", {
     title: "Login",
     nav,
@@ -105,7 +107,8 @@ accCont.accountLogin = async function(req, res) {
       } else {
         res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
       }
-      return res.redirect("/account/")
+      const redirectTo = req.session.returnTo || '/account/'; // Fallback to '/account/' if no page saved
+      return res.redirect(redirectTo)
     }
     else {
       req.flash("message notice", "Please check your credentials and try again.")

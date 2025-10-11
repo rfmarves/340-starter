@@ -109,23 +109,47 @@ reviewsCont.buildReviewListByUserHtmlSegment = async function(account_id) {
 //*  Create a review 
 //***********************************************************
 reviewsCont.createReviewInput = async function(req, res, next) {
-    const nav = await utilities.getNav()
-    const inv_id = req.params.inv_id
+  const nav = await utilities.getNav()
+  const inv_id = req.params.inv_id
+  const invObject = await inventoryModel.getInventoryByInventoryId(inv_id)
+  const invData = invObject[0]
+  const account_id = res.locals.accountData.account_id
+  const title = `Review for ${invData.inv_year} ${invData.inv_make} ${invData.inv_model}:`
+  res.render("./reviews/new-review", {
+    title: title,
+    nav,
+    inv_id,
+    account_id,
+    errors: null,
+    message: null,
+    notice: null,
+  })
+}
+
+//***********************************************************
+//*  Post a new review 
+//***********************************************************
+reviewsCont.createReviewPost = async function(req, res, next) {
+  const nav = await utilities.getNav()
+  const { review_text, inv_id, account_id } = req.body
+  const addReviewResult = await reviewsModel.addReview(review_text, inv_id, account_id)
+  if(addReviewResult) {
+    req.flash("message", "Review created successfully.")
+    return res.redirect(`/inv/detail/${inv_id}`)
+  } else {
     const invObject = await inventoryModel.getInventoryByInventoryId(inv_id)
     const invData = invObject[0]
-    const account_id = res.locals.accountData.account_id
     const title = `Review for ${invData.inv_year} ${invData.inv_make} ${invData.inv_model}:`
-    res.render("./reviews/new-review", {
+    console.log("path for review not added")
+    res.status(501).render("./reviews/new-review", {
       title: title,
       nav,
-      inv_id,
-      account_id,
-      errors: null,
       message: null,
       notice: null,
-    })
+      errors: [{msg: "Failed to add review."}],
+      ...req.body,})
+  }
 }
-reviewsCont.createReviewPost = async function(req, res, next) {}
 
 //***********************************************************
 //*  Edit a review 

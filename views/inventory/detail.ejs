@@ -4,8 +4,12 @@
 <% } else {
   res.redirect('/')
 } %>
-
-<%# messages() %>
+<%- messages() %>
+<% if (errors) { %>
+  <div class="flash-message">
+    <p><%= errors %></p>
+  </div>
+<% } %>
 
 <%# Detail for inventory item %>
 <%- detail %>
